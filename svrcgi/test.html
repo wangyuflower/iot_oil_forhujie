@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<script src="http://code.jquery.com/jquery-1.8.3.min.js">
+</script>
+<script>
+function GetJsonData() { 
+var json = { 
+"Action": "GetTodayOilUsage", 
+"userid": "hujie",
+}; 
+return json; 
+} 
+
+function myFunction()
+{
+//$("#returnMsg").html("Hellsadfsdo jQuery")
+
+$.ajax({ 
+type: "POST", 
+url: "http://139.199.9.166/proj/iot/interface.php", 
+contentType: "application/json; charset=utf-8", 
+data: JSON.stringify(GetJsonData()), 
+dataType: "json", 
+success: function (message) { 
+	$("#returnMsg").html(message.returnMsg)
+	$("#usrid").html(message.returnData[0]["usrid"])
+	$("#oilUsage").html(message.returnData[0]["dayuse"])
+if (message > 0) { 
+alert("success"); 
+} 
+}, 
+error: function (message) { 
+	$("#returnMsg").html(message.returnMsg)
+$("#request-process-patent").html("failed"); 
+} 
+}); 
+
+}
+$(document).ready(myFunction);
+</script>
+</head>
+
+<body>
+<h1>returnMsg</h1><h1 id="returnMsg">asfasdf</h1>
+<h1>usrid:</h1><h1 id="usrid"></h1>
+<h1>oilUsage:</h1><h1 id="oilUsage"></h1>
+</body>
+</html>
